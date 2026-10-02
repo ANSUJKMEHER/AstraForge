@@ -4,6 +4,7 @@
 
 ### *A High-Performance C++20 3D Game Engine & Interactive Dev Studio*
 
+[![CI](https://img.shields.io/github/actions/workflow/status/ANSUJKMEHER/AstraForge/ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/ANSUJKMEHER/AstraForge/actions)
 [![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)](https://en.cppreference.com/w/cpp/20)
 [![OpenGL 3.3](https://img.shields.io/badge/OpenGL-3.3%20Core-5586A4?style=for-the-badge&logo=opengl&logoColor=white)](https://www.khronos.org/opengl/)
 [![SDL2](https://img.shields.io/badge/SDL2-2.30.9-red?style=for-the-badge&logo=sdl&logoColor=white)](https://www.libsdl.org/)
