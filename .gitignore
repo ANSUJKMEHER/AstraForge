@@ -1,0 +1,43 @@
+# Build output — never commit
+build/
+build-*/
+out/
+cmake-build-*/
+
+# IDE files
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+
+# Compiler artifacts
+*.o
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.exe
+*.dll
+*.lib
+*.a
+*.so
+*.dylib
+
+# CMake cache artifacts inside the tree
+CMakeCache.txt
+CMakeFiles/
+
+# Logs, temporary files, screenshots
+*.log
+*.bmp
+imgui.ini
+*.zip
+
+# Local prebuilt SDL2 SDK
+third_party/SDL2*
+third_party/imgui/examples/
+
+# OS noise
+Thumbs.db
+.DS_Store

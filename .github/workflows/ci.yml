@@ -1,0 +1,59 @@
+name: CI
+
+# AstraForge CI — configure, build, test on Linux (GCC + Clang sanitizers)
+# and Windows (MSVC + vcpkg SDL2). The SDL2/OpenGL app target only builds
+# where SDL2 is found; engine core + gameplay + benchmarks + headless
+# runners build and test everywhere.
+#
+# Status: UNVERIFIED until first push to GitHub (workflow authored in the
+# sandbox; correctness is review-only — see phases.md Phase 11).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  linux-gcc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SDL2
+        run: sudo apt-get update && sudo apt-get install -y libsdl2-dev
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --config Release -j2
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  linux-sanitizers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure (ASan + UBSan)
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DASTRAFORGE_SANITIZE=ON
+      - name: Build
+        run: cmake --build build -j2
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  windows-msvc:
+    runs-on: windows-latest
+    env:
+      VCPKG_ROOT: C:/vcpkg
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install SDL2 via vcpkg
+        run: |
+          $env:VCPKG_ROOT + "/vcpkg.exe" install sdl2:x64-windows
+        shell: pwsh
+      - name: Configure
+        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows
+        shell: pwsh
+      - name: Build
+        run: cmake --build build --config Release
+        shell: pwsh
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure
+        shell: pwsh
